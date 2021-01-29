@@ -6,6 +6,25 @@
     <title>Contacto</title>
 </head>
 <body>
-    <h1>contacto</h1>
+    <h1>{titulo}</h1>
+
+    <a href="/">Inicio | </a>
+    <a href="/empresa">Empresa | </a>
+    <a href="/contacto">Contacto</a>
+
+    <p>{hora}</p>
+    <p>{saludo}</p>
+    <form method="POST" enctype="text/plain">
+        <label>Nombre:</label>
+        <input type="text" name="nombre">
+        <br>
+        <label>Email:</label>
+        <input type="text" name="email">
+        <br>
+        <label>Mensaje:</label>
+        <input type="text" name="mensaje">
+        <br>
+        <input type="submit" value="Enviar">
+    </form>
 </body>
 </html>

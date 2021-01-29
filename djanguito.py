@@ -37,24 +37,50 @@ class myHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type','text/html')
             self.end_headers()
             # Send the html message
-            self.wfile.write(("<b>Empresa</b>"
-                        + "<br><br> La hora actual es:" + str(datetime.datetime.now())).encode('utf-8'))
+            context = {
+                'titulo':'Esta es la pagina de la empresa',
+                'hora':str(datetime.datetime.now()),
+                'saludo':'Empresa de python.'
+            }
+            self.wfile.write(render('empresa.html', context))
 
         elif self.path == '/contacto':
             self.send_response(200)
             self.send_header('Content-type','text/html')
             self.end_headers()
             # Send the html message
-            self.wfile.write(("<b>Contacto</b>"
-                        + "<br><br> La hora actual es:" + str(datetime.datetime.now())).encode('utf-8'))
+            context = {
+                'titulo':'Esta es la pagina de contaco',
+                'hora':str(datetime.datetime.now()),
+                'saludo':'CONTACTANOS!'
+            }
+            self.wfile.write(render('contacto.html', context))
 
-        elif self.path == '/static/img/Putin.jpeg':
-            content, mime = get_static('static/img/Putin.jpeg')
+        elif self.path[0:7] == '/static':
+            content, mime = get_static(self.path[1:])
             self.send_response(200)
             self.send_header('Content-type',mime)
             self.end_headers()
             # Send the html message
             self.wfile.write(content)
+
+    def do_POST(self):
+        if self.path == '/contacto':
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
+            self.end_headers()
+
+            # obtenemos los datos desde el request POST
+            largo_contenido = int(self.headers['Content-Length'])
+            data = self.rfile.read(largo_contenido).decode('utf-8')
+            
+
+            context = {
+                'titulo':'Esta es la pagina de contaco',
+                'mensaje':'EL CONTACTO HA SIDO EXITOSO',
+                'data': data
+            }
+            self.wfile.write(render('contacto_exito.html', context))
             
             
             
